@@ -1,9 +1,9 @@
 package com.locker.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -11,10 +11,9 @@ public class Locker {
     
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     
-    @OneToOne
-    @JoinColumn(name = "OWNER_ID")
+    @Column(name = "OWNER_ID")
     private String owner;
 
     public Locker() {
@@ -29,6 +28,7 @@ public class Locker {
         this.id = id;
     }
 
+    @OneToOne(mappedBy = "user")
     public String getOwner() {
         return owner;
     }
