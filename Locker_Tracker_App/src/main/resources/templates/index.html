@@ -1,0 +1,16 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org">
+<body>
+	<h1>Locker application</h1>
+	<br></br>
+	<form action="#" th:action="@{/process}" th:object="${lockerForm}" method="POST">
+		<div>
+			Please enter the locker number you wish to manage <input type="text" th:field="*{id}" />
+			<p th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Name Error</p>
+		</div>
+		<button style="height: 70px; width: 200px" type="submit">Proceed</button>
+	</form>
+
+</body>
+</html>
