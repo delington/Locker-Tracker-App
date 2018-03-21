@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.locker.form.LockerForm;
+import com.locker.form.LoginForm;
 import com.locker.service.PublicService;
 
 @Controller
@@ -25,7 +25,7 @@ private static final Logger log = LoggerFactory.getLogger(PublicController.class
     @RequestMapping("/")
     public String index(Model model) {
         log.info("Main url called. Returning index page...");
-        model.addAttribute("lockerForm", new LockerForm());
+        model.addAttribute("loginForm", new LoginForm());
         
         return "index";
     }
