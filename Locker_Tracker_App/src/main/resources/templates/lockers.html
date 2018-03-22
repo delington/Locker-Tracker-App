@@ -1,0 +1,22 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+</head>
+<body>
+	<h1>Locker application</h1>
+	<br></br>
+	<table>
+		<tr>
+			<th>Locker ID</th>
+			<th>Owner Email</th>
+		</tr>
+		<tr th:each="locker : ${lockers}">
+			<td th:text="${locker.id}">Locker identifier</td>
+			<td th:text="${locker.owner.email}">Email</td>
+		</tr>
+	</table>
+	<br></br>
+    <a href="/users">Users</a> 
+</body>
+</html>

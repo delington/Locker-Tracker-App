@@ -18,7 +18,7 @@ public class User {
         
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "locker")
     public int getId() {
         return id;
     }
