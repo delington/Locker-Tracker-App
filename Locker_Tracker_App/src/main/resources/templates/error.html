@@ -1,12 +1,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymleaf.org">
+<head>
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
 <body>
 	<section>
 		<h2>Sorry but you encountered with an exception:</h2>
 		<p th:text="${exception}"></p>
-		<br></br>
-		<a href="/lockers">Lockers</a> 
-    </form>
+		<br></br> <a href="/lockers">Lockers</a>
+		</form>
 	</section>
 </body>
 </html>

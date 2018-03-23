@@ -34,16 +34,18 @@ private static final Logger log = LoggerFactory.getLogger(PublicController.class
     public String index(Model model) {
         log.info("Main url called. Returning login page...");
         model.addAttribute("lockers", lockerService.getLockers());
+        model.addAttribute("sum", lockerService.getLockers());
+        model.addAttribute("available", lockerService.getLockers());
         
         return "lockers";
     }
     
     @RequestMapping("/login")
     public String login(Model model) {
-        log.info("Main url called. Returning index page...");
+        log.info("/login url called. Returning login page.");
         model.addAttribute("loginForm", new LoginForm());
         
-        return "index";
+        return "login";
     }
     
     @RequestMapping("/lockers")

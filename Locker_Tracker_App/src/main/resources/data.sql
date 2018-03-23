@@ -8,3 +8,8 @@ insert into Locker (owner_id) values ((select id FROM USER where email like '%Gy
 insert into Locker (owner_id) values ((select id FROM USER where email like '%Csilla%'));
 insert into Locker (owner_id) values ((select id FROM USER where email like '%Laci%'));
 insert into Locker (owner_id) values ((select id FROM USER where email like '%Endre%'));
+insert into Locker (owner_id) values (null);
+insert into Locker (owner_id) values (null);
+insert into Locker (owner_id) values (null);
+insert into Locker (owner_id) values (null);
+insert into Locker (owner_id) values (null);
