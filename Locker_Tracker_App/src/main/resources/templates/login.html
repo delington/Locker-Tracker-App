@@ -4,21 +4,19 @@
 <body>
 	<h1>Locker application</h1>
 	<br></br>
-	<form action="#" th:action="@{/lockers}" th:object="${loginForm}" method="POST">
+	<form action="/lockers" method="POST">
 		<div>
 			Please log in with your credentials.
 			<br></br>
 			<br></br>
 			<div>
-				<div>Email</div> <input type="text" th:field="*{email}" />
+				<div>Email</div> <input type="text" />
 				<br></br>
 				<br></br>
-				<div>Password</div> <input type="text" th:field="*{password}" />
+				<div>Password</div> <input type="text"/>
 			</div>
 			<br></br>
 			<br></br>
-			<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
-			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
 		</div>
 		<button style="height: 70px; width: 200px" type="submit">Login</button>
 	</form>

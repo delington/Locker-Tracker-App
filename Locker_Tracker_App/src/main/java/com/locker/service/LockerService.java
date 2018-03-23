@@ -21,5 +21,10 @@ public class LockerService {
     public List<Locker> getLockers() {
         return lockerRepo.findAll();
     }
+
+    //TODO finish
+    public void edit(Integer lockerId) {
+        
+    }
     
 }

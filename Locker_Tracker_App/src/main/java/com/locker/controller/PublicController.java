@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.locker.form.LoginForm;
 import com.locker.service.LockerService;
 import com.locker.service.UserService;
 
@@ -33,18 +34,12 @@ private static final Logger log = LoggerFactory.getLogger(PublicController.class
     @RequestMapping("/")
     public String index(Model model) {
         log.info("Main url called. Returning login page...");
-        model.addAttribute("lockers", lockerService.getLockers());
-        model.addAttribute("sum", lockerService.getLockers());
-        model.addAttribute("available", lockerService.getLockers());
-        
-        return "lockers";
+        return "login";
     }
     
     @RequestMapping("/login")
     public String login(Model model) {
-        log.info("/login url called. Returning login page.");
-        model.addAttribute("loginForm", new LoginForm());
-        
+        log.info("/login url called.");
         return "login";
     }
     
@@ -62,5 +57,16 @@ private static final Logger log = LoggerFactory.getLogger(PublicController.class
         model.addAttribute("users", userService.getUsers());
         
         return "users";
+    }
+    
+    //TODO finish
+    @RequestMapping(value = "/edit" , method = RequestMethod.POST)
+    public String edit(Model model, @RequestParam(value = "lockerId") Integer lockerId) {
+        log.info("/edit url called.");
+        
+//        lockerService.edit(lockerId);
+//        model.addAttribute("lockers", lockerService.getLockers());
+        
+        return "lockers";
     }
 }
