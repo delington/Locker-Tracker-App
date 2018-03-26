@@ -34,7 +34,7 @@ private static final Logger log = LoggerFactory.getLogger(PublicController.class
     @RequestMapping("/")
     public String index(Model model) {
         log.info("Main url called. Returning login page...");
-        return "login";
+        return "redirect:lockers";
     }
     
     @RequestMapping("/login")

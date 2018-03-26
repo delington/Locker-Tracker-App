@@ -4,16 +4,16 @@
 <body>
 	<h1>Locker application</h1>
 	<br></br>
-	<form th:action="@{/lockers}" method="POST">
+	<form th:action="@{/login}" method="POST">
 		<div>
 			Please log in with your credentials.
 			<br></br>
 			<br></br>
 			<div>
-				<div>Email</div> <input type="text" id="username" name="username"/>
+				<div>Email</div> <input type="text" id="username" name="username" required="true"/>
 				<br></br>
 				<br></br>
-				<div>Password</div> <input type="password" id="password" name="password"/>
+				<div>Password</div> <input type="password" id="password" name="password" required="true"/>
 			</div>
 			<br></br>
 			<br></br>
