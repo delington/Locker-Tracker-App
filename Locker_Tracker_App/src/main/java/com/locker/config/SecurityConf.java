@@ -15,8 +15,8 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 		  .inMemoryAuthentication()
-		     .withUser("user") 
-		     .password("user")
+		     .withUser("Gyula@something.com") 
+		     .password("pass")
 		     .roles("USER");
 	}
 	
@@ -24,11 +24,15 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSec) throws Exception {
 	   httpSec
 		  .authorizeRequests()
+		      .antMatchers("/db/**").permitAll()
 		      .anyRequest().authenticated()
 		      .and()
 		  .formLogin()
 		      .loginPage("/login")
 		      .permitAll();
+	   
+	   httpSec.csrf().disable();
+	   httpSec.headers().frameOptions().disable();
 	}
 	
 }

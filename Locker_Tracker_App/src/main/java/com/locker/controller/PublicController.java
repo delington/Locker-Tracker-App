@@ -1,5 +1,7 @@
 package com.locker.controller;
 
+import java.security.Principal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import com.locker.service.UserService;
 @Controller
 public class PublicController {
 
-private static final Logger log = LoggerFactory.getLogger(PublicController.class);
+    private static final Logger log = LoggerFactory.getLogger(PublicController.class);
     
     private LockerService lockerService;
     
@@ -44,29 +46,41 @@ private static final Logger log = LoggerFactory.getLogger(PublicController.class
     }
     
     @RequestMapping("/lockers")
-    public String lockers(Model model) {
+    public String listLockers(Model model, Principal principal) {
         log.info("/lockers url called.");
         model.addAttribute("lockers", lockerService.getLockers());
+        model.addAttribute("userEmail", principal.getName());
         
         return "lockers";
     }
     
     @RequestMapping("/users")
-    public String users(Model model) {
+    public String listUsers(Model model) {
         log.info("/users url called.");
         model.addAttribute("users", userService.getUsers());
         
         return "users";
     }
     
-    //TODO finish
     @RequestMapping(value = "/edit" , method = RequestMethod.POST)
-    public String edit(Model model, @RequestParam(value = "lockerId") Integer lockerId) {
-        log.info("/edit url called.");
+    public String editLockerOwner(Model model, Principal principal, @RequestParam(value = "lockerId") Integer lockerId) {
+        log.info(String.format("/edit url called. lockerId=[%s]", lockerId));
         
-//        lockerService.edit(lockerId);
-//        model.addAttribute("lockers", lockerService.getLockers());
+        lockerService.editOwner(principal.getName(), lockerId);
+        model.addAttribute("lockers", lockerService.getLockers());
         
+        log.info("/edit end point's tasks excecuted successfully.");
+        return "lockers";
+    }
+    
+    @RequestMapping(value = "/remove" , method = RequestMethod.DELETE)
+    public String removeLockerOwner(Model model, Principal principal, @RequestParam(value = "lockerId") Integer lockerId) {
+        log.info(String.format("/remove url called. lockerId=[%s]", lockerId));
+        
+        lockerService.editOwner(principal.getName(), lockerId);
+        model.addAttribute("lockers", lockerService.getLockers());
+        
+        log.info("/edit end point's tasks excecuted successfully.");
         return "lockers";
     }
 }

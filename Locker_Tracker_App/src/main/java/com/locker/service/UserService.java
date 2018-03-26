@@ -21,5 +21,9 @@ public class UserService {
     public List<User> getUsers() {
         return userRepo.findAll();
     }
+    
+    public User getLoggedInUserByName(String email) {
+        return userRepo.findOneByEmail(email);
+    } 
 
 }
