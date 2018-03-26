@@ -44,7 +44,17 @@ public class LockerService {
         lockerRepo.save(oldLocker);
         lockerRepo.save(newLocker);
         
-        log.info("Changing User's locker successfully done.");
+        log.info("Change User's locker successfully done.");
+    }
+
+    public void removeLocker(String email) {
+        User loggedInUser = userService.getLoggedInUserByName(email);
+        Locker oldLocker = lockerRepo.findOneByOwner(loggedInUser);
+        
+        oldLocker.setOwner(null);
+        lockerRepo.save(oldLocker);
+        
+        log.info("Remove logged in User's locker succesfully done.");
     }
     
 }

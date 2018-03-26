@@ -63,24 +63,23 @@ public class PublicController {
     }
     
     @RequestMapping(value = "/edit" , method = RequestMethod.POST)
-    public String editLockerOwner(Model model, Principal principal, @RequestParam(value = "lockerId") Integer lockerId) {
+    public String editLockerOwner(Model model, Principal principal, 
+            @RequestParam(value = "lockerId") Integer lockerId) {
+        
         log.info(String.format("/edit url called. lockerId=[%s]", lockerId));
-        
         lockerService.editOwner(principal.getName(), lockerId);
-        model.addAttribute("lockers", lockerService.getLockers());
-        
         log.info("/edit end point's tasks excecuted successfully.");
-        return "lockers";
+        
+        return "redirect:lockers";
     }
     
     @RequestMapping(value = "/remove" , method = RequestMethod.DELETE)
-    public String removeLockerOwner(Model model, Principal principal, @RequestParam(value = "lockerId") Integer lockerId) {
-        log.info(String.format("/remove url called. lockerId=[%s]", lockerId));
+    public String removeLockerOwner(Model model, Principal principal) {
         
-        lockerService.editOwner(principal.getName(), lockerId);
-        model.addAttribute("lockers", lockerService.getLockers());
+        log.info(String.format("/remove url called."));
+        lockerService.removeLocker(principal.getName());
+        log.info("/remove end point's tasks excecuted successfully.");
         
-        log.info("/edit end point's tasks excecuted successfully.");
-        return "lockers";
+        return "redirect:lockers";
     }
 }

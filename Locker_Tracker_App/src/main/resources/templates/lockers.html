@@ -25,8 +25,8 @@
 					</form>
 				</td>
 				<td th:if="${locker.owner != null}">
-				    <form th:if="${userEmail == locker.owner.email}" action="#" th:action="@{/remove}" method="DELETE">
-                        <button style="height: 70px; width: 200px" type="submit" name="lockerId" th:value="${locker.id}">Demit this locker.</button>
+				    <form th:if="${userEmail == locker.owner.email}" action="#" th:action="@{/remove}" th:method="DELETE">
+                        <button style="height: 70px; width: 200px" type="submit">Demit this locker.</button>
                     </form>
 				</td>
 			</tr>
