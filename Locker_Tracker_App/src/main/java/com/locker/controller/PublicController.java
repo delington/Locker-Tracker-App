@@ -47,6 +47,7 @@ public class PublicController {
     
     @RequestMapping("/lockers")
     public String listLockers(Model model, Principal principal) {
+        
         log.info("/lockers url called.");
         model.addAttribute("lockers", lockerService.getLockers());
         model.addAttribute("userEmail", principal.getName());
@@ -56,6 +57,7 @@ public class PublicController {
     
     @RequestMapping("/users")
     public String listUsers(Model model) {
+        
         log.info("/users url called.");
         model.addAttribute("users", userService.getUsers());
         
