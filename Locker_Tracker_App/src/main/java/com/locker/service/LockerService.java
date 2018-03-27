@@ -39,11 +39,12 @@ public class LockerService {
         Locker oldLocker = lockerRepo.findOneByOwner(loggedInUser);
         Locker newLocker = lockerRepo.findOneById(lockerId);
         
-        if (oldLocker.getId().equals(newLocker.getId())) {
-            throw new IllegalArgumentException("Locker change for itself is useless!");
-        }
-        
         if (oldLocker != null) {
+            
+            if (oldLocker.getId().equals(newLocker.getId())) {
+                throw new IllegalArgumentException("Locker change for itself is useless!");
+            }
+            
             oldLocker.setOwner(null);
             lockerRepo.save(oldLocker);
         }

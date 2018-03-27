@@ -13,6 +13,8 @@ public class User {
     private Integer id;
     
     private String email;
+    
+    private String password;
 
     public User() {
         
@@ -35,9 +37,17 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + "]";
+        return "User [id=" + id + ", email=" + email + ", password=" + password + "]";
     }
     
 }

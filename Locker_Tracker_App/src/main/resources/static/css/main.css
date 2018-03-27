@@ -11,7 +11,7 @@ td {
 }
 
 td.editable {
-	background-color: #ff9933;
+	background-color: #4dff4d;
 }
 
 td.removable {
@@ -20,7 +20,7 @@ td.removable {
 
 td.idColumn {
 	color: white;
-	background-color: brown;
+	background-color: #000099;
 }
 
 th {

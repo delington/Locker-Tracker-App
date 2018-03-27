@@ -1,4 +1,4 @@
-insert into User (email) VALUES ('Gyula@something.com');
+insert into User (email, password) VALUES ('Gyula@something.com', 'pass');
 insert into User (email) VALUES ('Csilla@something.com');
 insert into User (email) VALUES ('Alma@something.com');
 insert into User (email) VALUES ('Endre@something.com');
