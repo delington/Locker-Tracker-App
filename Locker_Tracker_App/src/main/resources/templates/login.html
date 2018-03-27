@@ -1,6 +1,10 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymleaf.org">
+      
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
 <body>
 	<h1>Locker application</h1>
 	<br></br>
@@ -20,6 +24,11 @@
 		</div>
 		<button style="height: 70px; width: 200px" type="submit">Login</button>
 	</form>
+	<br></br>
+	<div>
+        <p th:if="${param.logout}" class="loggedOutSuccess">Successfully logged out!</p>
+    	<p th:if="${param.error}" class="loginError">Error with email or password!</p>
+	</div>
 
 </body>
 </html>

@@ -1,8 +1,8 @@
-insert into User (email, password) VALUES ('Gyula@something.com', 'pass');
-insert into User (email) VALUES ('Csilla@something.com');
-insert into User (email) VALUES ('Alma@something.com');
-insert into User (email) VALUES ('Endre@something.com');
-insert into User (email) VALUES ('Laci@something.com');
+insert into User (email, password) VALUES ('Gyula@something.com', '$2a$10$kOIWxlkxbU1NtqSF/Q2r9enhORF4KDogYjqCMCilex9mlF7z0KRne');
+insert into User (email, password) VALUES ('Csilla@something.com', '$2a$10$X0.amibuDw/3giiohc2bhODu9O2V8JmPNJvJ0xCas.qdDKxguiuK2');
+insert into User (email, password) VALUES ('Alma@something.com', '$2a$10$X0.amibuDw/3giiohc2bhODu9O2V8JmPNJvJ0xCas.qdDKxguiuK2');
+insert into User (email, password) VALUES ('Endre@something.com', '$2a$10$X0.amibuDw/3giiohc2bhODu9O2V8JmPNJvJ0xCas.qdDKxguiuK2');
+insert into User (email, password) VALUES ('Laci@something.com', '$2a$10$X0.amibuDw/3giiohc2bhODu9O2V8JmPNJvJ0xCas.qdDKxguiuK2');
 insert into Locker (owner_id) values ((select id FROM USER where email like '%Alma%'));
 insert into Locker (owner_id) values ((select id FROM USER where email like '%Gyula%'));
 insert into Locker (owner_id) values ((select id FROM USER where email like '%Csilla%'));

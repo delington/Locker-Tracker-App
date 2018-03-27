@@ -27,16 +27,17 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	
 	@Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        
+	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+	    
         authProvider.setUserDetailsService(userDetailsService);
-//      authProvider.setPasswordEncoder(encoder());
+        authProvider.setPasswordEncoder(encoder());
+        
         return authProvider;
     }
     
     @Bean
     public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder(12);
+        return new BCryptPasswordEncoder();
     }
 	
 	@Override
@@ -48,7 +49,11 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 		      .and()
 		  .formLogin()
 		      .loginPage("/login")
-		      .permitAll();
+		      .permitAll()
+		      .and()
+	      .logout()
+              .logoutSuccessUrl("/login?logout")
+              .permitAll();
 	   
 	   httpSec.csrf().disable();
 	   httpSec.headers().frameOptions().disable();

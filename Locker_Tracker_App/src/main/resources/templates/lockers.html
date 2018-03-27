@@ -2,11 +2,14 @@
 	xmlns:th="http://www.thymleaf.org">
 
 <head>
-<link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
 	<h1>Lockers</h1>
 	<a href="/users">Users</a>
+	<form id="formLogout" th:action="@{/logout}" method="POST">
+        <a href="javascript:{}" onclick="document.getElementById('formLogout').submit()">Logout</a>
+    </form>
 	<br></br>
 	<br></br>
 	<div>
