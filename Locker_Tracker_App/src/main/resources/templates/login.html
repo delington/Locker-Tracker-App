@@ -22,11 +22,16 @@
 			<br></br>
 			<br></br>
 		</div>
-		<button style="height: 70px; width: 200px" type="submit">Login</button>
+		<button style="height: 50px; width: 100px" type="submit">Login</button>
+		<br></br>
+		<br></br>
+		<br></br>
+		<a href="/signup">Sign Up!</a>
 	</form>
 	<br></br>
 	<div>
-        <p th:if="${param.logout}" class="loggedOutSuccess">Successfully logged out!</p>
+        <p th:if="${param.logout}" class="success">Successfully logged out!</p>
+    	<p th:if="${regSuccess != null}" class="success">Successfully registered!</p>
     	<p th:if="${param.error}" class="loginError">Error with email or password!</p>
 	</div>
 

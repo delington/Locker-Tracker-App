@@ -1,4 +1,11 @@
-p.loggedOutSuccess {
+#logoutAnchor {
+	position: relative;
+	left: 260px;
+	bottom: 17px;
+	background-color: purple;
+}
+
+p.success {
 	padding: 10px 10px 10px 10px;
 	background-color: green;
 	color: yellow;

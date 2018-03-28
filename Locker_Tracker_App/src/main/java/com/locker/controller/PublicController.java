@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.locker.exception.LockerException;
 import com.locker.service.LockerService;
 import com.locker.service.UserService;
 
@@ -34,14 +35,35 @@ public class PublicController {
     }
 
     @RequestMapping("/")
-    public String index(Model model) {
+    public String index() {
         log.info("Main url called. Returning login page...");
         return "redirect:lockers";
     }
     
     @RequestMapping("/login")
-    public String login(Model model) {
+    public String login() {
+        
         log.info("/login url called.");
+        return "login";
+    }
+    
+    @RequestMapping("/signup")
+    public String signUp()
+            throws LockerException {
+        
+        log.info("/signup url called.");
+        return "signup";
+    }
+    
+    @RequestMapping("/signup/regUser")
+    public String signUpUser(Model model,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "password") String password) throws LockerException {
+        log.info("/signup/regUser url called.");
+        
+        userService.signUpUser(email, password);
+        
+        model.addAttribute("regSuccess", true);
         return "login";
     }
     

@@ -1,5 +1,6 @@
 package com.locker.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,12 +13,19 @@ public class User {
     @GeneratedValue
     private Integer id;
     
+    @Column(unique = true, nullable = false)
     private String email;
     
+    @Column(nullable = false)
     private String password;
 
     public User() {
         
+    }
+    
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     @OneToOne(mappedBy = "locker")

@@ -1,0 +1,31 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org">
+      
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+<!--     <script type="text/javascript" th:src="@{/js/signup.js}"/> -->
+</head>
+<body>
+	<h1>Registration</h1>
+	<br></br>
+	<form action="/signup/regUser" method="POST">
+		<div>
+			Please give an email and a password
+			<br></br>
+			<br></br>
+			<div>
+				<input type="text" id="email" name="email" th:placeholder="'Email address'" required="true"/>
+				<br></br>
+				<br></br>
+				<input type="password" id="password" name="password" th:placeholder="Password" required="true"/>
+			</div>
+			<br></br>
+			<br></br>
+		</div>
+		<button style="height: 50px; width: 100px" type="submit">Sign Up!</button>
+		<a href="/">Main page</a>
+	</form>
+
+</body>
+</html>
