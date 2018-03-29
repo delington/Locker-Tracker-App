@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
 import com.locker.service.LockerService;
 import com.locker.service.UserService;
+import com.locker.validator.UserRegisterFormValidator;
 
 @Controller
 public class PublicController {
@@ -27,9 +30,16 @@ public class PublicController {
 
     private static final String USER_REGISTER_FORM_ID = "registerForm";
 
+    private UserRegisterFormValidator formValidator;
+
     private LockerService lockerService;
 
     private UserService userService;
+
+    @Autowired
+    public void setFormValidator(UserRegisterFormValidator formValidator) {
+        this.formValidator = formValidator;
+    }
 
     @Autowired
     public void setLockerService(LockerService lockerService) {
@@ -39,6 +49,11 @@ public class PublicController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(formValidator);
     }
 
     @RequestMapping("/")

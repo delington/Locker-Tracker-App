@@ -14,6 +14,8 @@ public class UserRegisterForm {
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "-Can only contains numbers and letters")
     private String password;
 
+    private String passwordConfirm;
+
     public String getEmail() {
         return email;
     }
@@ -28,6 +30,14 @@ public class UserRegisterForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
