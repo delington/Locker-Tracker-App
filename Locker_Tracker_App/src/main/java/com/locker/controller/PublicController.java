@@ -2,16 +2,21 @@ package com.locker.controller;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.locker.exception.LockerException;
+import com.locker.form.UserRegisterForm;
 import com.locker.service.LockerService;
 import com.locker.service.UserService;
 
@@ -19,16 +24,18 @@ import com.locker.service.UserService;
 public class PublicController {
 
     private static final Logger log = LoggerFactory.getLogger(PublicController.class);
-    
+
+    private static final String USER_REGISTER_FORM_ID = "registerForm";
+
     private LockerService lockerService;
-    
+
     private UserService userService;
-    
+
     @Autowired
     public void setLockerService(LockerService lockerService) {
         this.lockerService = lockerService;
     }
-    
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -39,71 +46,73 @@ public class PublicController {
         log.info("Main url called. Returning login page...");
         return "redirect:lockers";
     }
-    
+
     @RequestMapping("/login")
     public String login() {
-        
         log.info("/login url called.");
         return "login";
     }
-    
+
     @RequestMapping("/signup")
-    public String signUp()
-            throws LockerException {
-        
+    public String signUp(Model model) throws LockerException {
         log.info("/signup url called.");
+        model.addAttribute("registerForm", new UserRegisterForm());
         return "signup";
     }
-    
+
     @RequestMapping("/signup/regUser")
     public String signUpUser(Model model,
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "password") String password) throws LockerException {
+            @Valid @ModelAttribute(USER_REGISTER_FORM_ID) UserRegisterForm userForm, BindingResult bindingResult)
+                    throws LockerException {
         log.info("/signup/regUser url called.");
-        
-        userService.signUpUser(email, password);
-        
+
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
+
+        userService.signUpUser(userForm);
+
         model.addAttribute("regSuccess", true);
         return "login";
     }
-    
+
     @RequestMapping("/lockers")
     public String listLockers(Model model, Principal principal) {
-        
+
         log.info("/lockers url called.");
         model.addAttribute("lockers", lockerService.getLockers());
         model.addAttribute("userEmail", principal.getName());
-        
+
         return "lockers";
     }
-    
+
     @RequestMapping("/users")
     public String listUsers(Model model) {
-        
+
         log.info("/users url called.");
         model.addAttribute("users", userService.getUsers());
-        
+
         return "users";
     }
-    
+
     @RequestMapping(value = "/edit" , method = RequestMethod.POST)
-    public String editLockerOwner(Model model, Principal principal, 
+    public String editLockerOwner(Model model, Principal principal,
             @RequestParam(value = "lockerId") Integer lockerId) {
-        
+
         log.info(String.format("/edit url called. lockerId=[%s]", lockerId));
         lockerService.editOwner(principal.getName(), lockerId);
         log.info("/edit end point's tasks excecuted successfully.");
-        
+
         return "redirect:lockers";
     }
-    
+
     @RequestMapping(value = "/remove" , method = RequestMethod.DELETE)
     public String removeLockerOwner(Model model, Principal principal) {
-        
+
         log.info(String.format("/remove url called."));
         lockerService.removeLocker(principal.getName());
         log.info("/remove end point's tasks excecuted successfully.");
-        
+
         return "redirect:lockers";
     }
 }

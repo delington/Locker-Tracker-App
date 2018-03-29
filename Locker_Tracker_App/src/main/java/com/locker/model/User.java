@@ -8,21 +8,21 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class User {
-    
+
     @Id
     @GeneratedValue
     private Integer id;
-    
+
     @Column(unique = true, nullable = false)
     private String email;
-    
+
     @Column(nullable = false)
     private String password;
 
     public User() {
         
     }
-    
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -55,7 +55,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + "]";
+        return "User [id=" + id + ", email=" + email + "]";
     }
-    
+
 }

@@ -32,7 +32,7 @@
 	<div>
         <p th:if="${param.logout}" class="success">Successfully logged out!</p>
     	<p th:if="${regSuccess != null}" class="success">Successfully registered!</p>
-    	<p th:if="${param.error}" class="loginError">Error with email or password!</p>
+    	<p th:if="${param.error}" class="error">Error with email or password!</p>
 	</div>
 
 </body>

@@ -9,16 +9,18 @@
 <body>
 	<h1>Registration</h1>
 	<br></br>
-	<form action="/signup/regUser" method="POST">
+	<form th:action="@{/signup/regUser}" th:object="${registerForm}" method="POST">
 		<div>
 			Please give an email and a password
 			<br></br>
 			<br></br>
 			<div>
-				<input type="text" id="email" name="email" th:placeholder="'Email address'" required="true"/>
+				<input type="text" th:placeholder="'Email address'" th:field="*{email}" required="true"/>
 				<br></br>
 				<br></br>
-				<input type="password" id="password" name="password" th:placeholder="Password" required="true"/>
+				<input type="password" th:placeholder="Password" th:field="*{password}" required="true"/>
+				<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</p>
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Email Error</p>
 			</div>
 			<br></br>
 			<br></br>
