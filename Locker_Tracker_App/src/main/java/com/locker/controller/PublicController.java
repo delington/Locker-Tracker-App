@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
+import com.locker.service.EmailService;
 import com.locker.service.LockerService;
 import com.locker.service.UserService;
 import com.locker.validator.UserRegisterFormValidator;
@@ -36,6 +37,8 @@ public class PublicController {
 
     private UserService userService;
 
+    private EmailService emailService;
+
     @Autowired
     public void setFormValidator(UserRegisterFormValidator formValidator) {
         this.formValidator = formValidator;
@@ -49,6 +52,11 @@ public class PublicController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
     }
 
     @InitBinder
@@ -86,6 +94,7 @@ public class PublicController {
         }
 
         userService.signUpUser(userForm);
+        emailService.sendRegistrationSuccessfullMessage(userForm.getEmail());
 
         model.addAttribute("regSuccess", true);
         return "login";
