@@ -12,9 +12,9 @@ import com.locker.repository.UserRepository;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
-    
+
     private UserRepository userRepo;
-    
+
     @Autowired
     public void setUserRepo(UserRepository userRepo) {
         this.userRepo = userRepo;
@@ -22,12 +22,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepo.findOneByEmail(email);
-        
+        User user = userRepo.findOneByEmail(email.toLowerCase());
+
         if (user == null) {
             throw new UsernameNotFoundException("User not found by its email in the database!");
         }
-        
+
         return new MyUserPrincipal(user);
     }
 

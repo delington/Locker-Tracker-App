@@ -30,15 +30,15 @@ public class UserService {
     }
 
     public User getLoggedInUserByName(String email) {
-        return userRepo.findOneByEmail(email);
+        return userRepo.findOneByEmail(email.toLowerCase());
     }
 
     public void signUpUser(UserRegisterForm userForm) throws LockerException {
-        String userFormEmail = userForm.getEmail();
+        String userFormEmail = userForm.getEmail().toLowerCase();
         User user = userRepo.findOneByEmail(userFormEmail);
 
         if (user != null) {
-            String errorMessage = "This user is already exists!";
+            String errorMessage = "This user already exists!";
             log.error("LockerException thrown: " + errorMessage);
             throw new LockerException(errorMessage);
         }
@@ -53,8 +53,8 @@ public class UserService {
         userRepo.save(user);
 
         log.info(
-            String.format("UserService: user saved in the database successfully. [user.email=%s]"),
-            userFormEmail);
+            String.format("UserService: user saved in the database successfully. [user.email = %s]",
+                    userFormEmail));
     }
 
 }
