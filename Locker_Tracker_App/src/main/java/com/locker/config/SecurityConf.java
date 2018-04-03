@@ -16,35 +16,35 @@ import com.locker.service.UserDetailServiceImpl;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConf extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private UserDetailServiceImpl userDetailsService;
-	
+
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 		  .authenticationProvider(authenticationProvider());
 	}
-	
+
 	@Bean
     public DaoAuthenticationProvider authenticationProvider() {
 	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	    
+
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(encoder());
-        
+
         return authProvider;
     }
-    
+
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-	
+
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
 	   httpSec
 		  .authorizeRequests()
-		      .antMatchers("/db/**", "/signup/**").permitAll()
+		      .antMatchers("/db/**", "/signup/**", "/activation/**").permitAll()
 		      .anyRequest().authenticated()
 		      .and()
 		  .formLogin()
@@ -54,9 +54,9 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	      .logout()
               .logoutSuccessUrl("/login?logout")
               .permitAll();
-	   
+
 	   httpSec.csrf().disable();
 	   httpSec.headers().frameOptions().disable();
 	}
-	
+
 }

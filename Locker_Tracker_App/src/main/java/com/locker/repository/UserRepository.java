@@ -11,5 +11,7 @@ import com.locker.model.User;
 public interface UserRepository extends CrudRepository<User, Long>{
     public List<User> findAll();
 
-    public User findOneByEmail(String email);
+    public User findByEmail(String email);
+
+    public User findByActivation(String code);
 }

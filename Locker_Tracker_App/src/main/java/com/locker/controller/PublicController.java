@@ -1,5 +1,6 @@
 package com.locker.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,7 +88,7 @@ public class PublicController {
     @RequestMapping("/signup/regUser")
     public String signUpUser(Model model,
             @Valid @ModelAttribute(USER_REGISTER_FORM_ID) UserRegisterForm userForm, BindingResult bindingResult)
-                    throws LockerException {
+                    throws LockerException, UnsupportedEncodingException {
         log.info("/signup/regUser url called.");
 
         if (bindingResult.hasErrors()) {
@@ -139,4 +141,18 @@ public class PublicController {
 
         return "redirect:lockers";
     }
+
+     @RequestMapping(value = "/activation/{code}", method = RequestMethod.GET)
+        public String activation(Model model, @PathVariable("code") String code) {
+        log.info("/activation url called.");
+        String result = userService.activateUser(code);
+
+        if (result == "userNotFound") {
+            model.addAttribute("activation", false);
+            return "/login?activation=userNotFound";
+        }
+
+        model.addAttribute("activation", true);
+        return "redirect:/login?activation=ok";
+     }
 }
