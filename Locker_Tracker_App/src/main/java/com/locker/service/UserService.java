@@ -81,12 +81,12 @@ public class UserService {
         return new String(word);
     }
 
-    public String activateUser(String code) {
+    public void activateUser(String code) throws LockerException {
         User user = userRepo.findByActivation(code);
 
         if (user == null) {
             log.info("User not found with this activation code");
-            return "userNotFound";
+            throw new LockerException("LockerException: User not found with this activation code");
         }
 
         user.setEnabled(true);
@@ -94,7 +94,6 @@ public class UserService {
         userRepo.save(user);
 
         log.info("User activated its account");
-        return "ok";
     }
 
 }

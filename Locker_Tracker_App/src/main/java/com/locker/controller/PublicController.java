@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
+import com.locker.model.LoginNotification;
 import com.locker.service.EmailService;
 import com.locker.service.LockerService;
 import com.locker.service.UserService;
@@ -61,7 +62,7 @@ public class PublicController {
         this.emailService = emailService;
     }
 
-    @InitBinder
+    @InitBinder("registerForm")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(formValidator);
     }
@@ -87,7 +88,8 @@ public class PublicController {
 
     @RequestMapping("/signup/regUser")
     public String signUpUser(Model model,
-            @Valid @ModelAttribute(USER_REGISTER_FORM_ID) UserRegisterForm userForm, BindingResult bindingResult)
+            @Valid @ModelAttribute(USER_REGISTER_FORM_ID) UserRegisterForm userForm,
+            BindingResult bindingResult)
                     throws LockerException, UnsupportedEncodingException {
         log.info("/signup/regUser url called.");
 
@@ -98,7 +100,11 @@ public class PublicController {
         userService.signUpUser(userForm);
         emailService.sendRegistrationSuccessfullMessage(userForm.getEmail());
 
-        model.addAttribute("regSuccess", true);
+        LoginNotification notification =
+                new LoginNotification("Successfully registered!\nActivation email sent.", "success");
+
+        model.addAttribute("notification", notification);
+        log.info(notification.toString());
         return "login";
     }
 
@@ -145,14 +151,20 @@ public class PublicController {
      @RequestMapping(value = "/activation/{code}", method = RequestMethod.GET)
         public String activation(Model model, @PathVariable("code") String code) {
         log.info("/activation url called.");
-        String result = userService.activateUser(code);
 
-        if (result == "userNotFound") {
-            model.addAttribute("activation", false);
-            return "login";
+        LoginNotification notification = new LoginNotification();
+
+        try {
+            userService.activateUser(code);
+            notification.setMessage("User account activated!\nYou can now log in.");
+            notification.setType("success");
+        } catch (LockerException ex) {
+            notification.setMessage("User not found by this activation link!");
+            notification.setType("error");
         }
 
-        model.addAttribute("activation", true);
+        model.addAttribute("notification", notification);
         return "login";
+
      }
 }
