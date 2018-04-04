@@ -31,9 +31,9 @@
 	<br></br>
 	<div>
         <p th:if="${param.logout}" class="success">Successfully logged out!</p>
-    	<p th:if="${regSuccess != null}" class="success">Successfully registered!</p>
-    	<p th:if="${param.activation == 'ok'}" class="success">User account activated!</p>
-    	<p th:if="${param.activation == 'userNotFound'}" class="error">User not found by this activation link!</p>
+    	<p th:if="${regSuccess != null}" class="success">Successfully registered!<br></br>Activation email sent.</p>
+    	<p th:if="${activation == true}" class="success">User account activated!<br></br>You can now log in</p>
+    	<p th:if="${activation == false}" class="error">User not found by this activation link!</p>
     	<p th:if="${param.error}" class="error">Error with email or password!</p>
 	</div>
 

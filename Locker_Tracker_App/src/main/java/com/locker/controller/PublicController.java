@@ -149,10 +149,10 @@ public class PublicController {
 
         if (result == "userNotFound") {
             model.addAttribute("activation", false);
-            return "/login?activation=userNotFound";
+            return "login";
         }
 
         model.addAttribute("activation", true);
-        return "redirect:/login?activation=ok";
+        return "login";
      }
 }

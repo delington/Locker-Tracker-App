@@ -49,7 +49,7 @@ public class EmailService {
     public void sendActivationLink(String email, String activationCode) throws UnsupportedEncodingException {
         SimpleMailMessage message = null;
 
-        String path = String.format("%s", activationCode);
+        String path = String.format("activation/%s", activationCode);
         String url = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host(APPLICATION_HOST)
@@ -63,7 +63,7 @@ public class EmailService {
             message.setTo(email);
             message.setSubject("Need to activate");
             message.setText("Dear " + email + "! \n \n You need to activate yourself to validate your email.\n\n" +
-            "Activation link is:\n" + url);
+            "Activation link is:\n<a href=\"\"" + url + ">" + url + "</a>");
             javaMailSender.send(message);
 
             log.info("Activation email sent successfully to: " + email);
