@@ -22,9 +22,9 @@
 				<br></br>
 				<br></br>
 				<input type="password" th:placeholder="'Type password again'" th:field="*{passwordConfirm}" required="true"/>
-				<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</p>
-				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Password Error</p>
-				<p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="error">PasswordConfirm Error</p>
+				<div>
+					<p class="error" th:each="err : ${#fields.errors('*')}" th:text="${err}">Errors</p>
+				</div>
 			</div>
 			<br></br>
 			<br></br>

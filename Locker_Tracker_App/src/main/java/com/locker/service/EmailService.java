@@ -63,7 +63,7 @@ public class EmailService {
             message.setTo(email);
             message.setSubject("Need to activate");
             message.setText("Dear " + email + "! \n \n You need to activate yourself to validate your email.\n\n" +
-            "Activation link is:\n<a href=\"\"" + url + ">" + url + "</a>");
+            "Activation link is:\n" + url);
             javaMailSender.send(message);
 
             log.info("Activation email sent successfully to: " + email);

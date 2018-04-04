@@ -19,7 +19,7 @@ public class UserRegisterFormValidator implements Validator {
         UserRegisterForm form = (UserRegisterForm) target;
 
         if (!form.getPassword().equals(form.getPasswordConfirm())) {
-            errors.rejectValue("passwordConfirm", "error.password.mismatch", "-The given passwords not match");
+            errors.rejectValue("passwordConfirm", "error.password.mismatch", "The given passwords not match");
         }
     }
 

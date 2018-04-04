@@ -10,8 +10,8 @@ public class UserRegisterForm {
     @Email(message = "Email address must be valid")
     private String email;
 
-    @Size(min = 8, max = 30, message = "-Password length must be in 8 and 30 characters")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "-Can only contains numbers and letters")
+    @Size(min = 8, max = 30, message = "Password length must be in 8 and 30 characters")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "Can only contains numbers and letters")
     private String password;
 
     private String passwordConfirm;
