@@ -101,7 +101,7 @@ public class PublicController {
         emailService.sendRegistrationSuccessfullMessage(userForm.getEmail());
 
         LoginNotification notification =
-                new LoginNotification("Successfully registered!\nActivation email sent.", "success");
+                new LoginNotification("login.activation", "success");
 
         model.addAttribute("notification", notification);
         log.info(notification.toString());
@@ -156,10 +156,10 @@ public class PublicController {
 
         try {
             userService.activateUser(code);
-            notification.setMessage("User account activated!\nYou can now log in.");
+            notification.setMessage("activation.success");
             notification.setType("success");
         } catch (LockerException ex) {
-            notification.setMessage("User not found by this activation link!");
+            notification.setMessage("activation.user-not-found");
             notification.setType("error");
         }
 

@@ -32,7 +32,7 @@
 	<div>
         <p th:if="${param.logout}" th:text="#{logout.success}" class="success"></p>
     	<p th:if="${param.error}" th:text="#{login.error}" class="error"></p>
-   	    <p th:if="${notification != null}" th:text="${notification.message}" th:class="${notification.type}"></p>
+   	    <p th:if="${notification != null}" th:text="#{${notification.message}}" th:class="${notification.type}"></p>
 	</div> 
 
 </body>
