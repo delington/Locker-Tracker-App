@@ -8,7 +8,7 @@
 	<h1 th:text="#{lockers.header}"></h1>
 	<a th:text="#{button.users}" href="/users"></a>
 	<form id="formLogout" th:action="@{/logout}" method="POST">
-        <a th:text="#{button.logout}" id="logoutAnchor" href="javascript:{}" onclick="document.getElementById('formLogout').submit()"></a>
+        <a th:text="#{button.logout}" id="logoutAnchor" href="javascript:{}" onclick="submitLogout()"></a>
     </form>
 	<div>
 		<table>
@@ -33,5 +33,11 @@
 			</tr>
 		</table>
 	</div>
+	
+	<script>
+		submitLogout = () => {
+			document.getElementById('formLogout').submit();
+		}
+	</script>
 </body>
 </html>
