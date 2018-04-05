@@ -6,10 +6,10 @@
 </head>
 <body>
 	<section>
-		<h2>Sorry but you encountered with an exception:</h2>
+		<h2 th:text="#{page.exception.header}"></h2>
 		<p th:text="${exception}"></p>
 	</section>
 	<br></br>
-	<a href="/">Main page</a>
+	<a th:text="#{button.main-page}" href="/"></a>
 </body>
 </html>

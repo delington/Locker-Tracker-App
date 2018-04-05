@@ -2,7 +2,7 @@ package com.locker.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +57,7 @@ public class UserService {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(userForm.getPassword());
-        String activationCode = generateKey();
+        String activationCode = UUID.randomUUID().toString();
 
         user.setPassword(hashedPassword);
         user.setEnabled(false);
@@ -69,16 +69,6 @@ public class UserService {
         log.info(
             String.format("UserService: user saved in the database successfully. [user.email = %s]",
                     userFormEmail));
-    }
-
-    public String generateKey() {
-        Random random = new Random();
-        char[] word = new char[16];
-        for (int j = 0; j < word.length; j++) {
-            word[j] = (char) ('a' + random.nextInt(26));
-        }
-
-        return new String(word);
     }
 
     public void activateUser(String code) throws LockerException {

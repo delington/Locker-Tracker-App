@@ -6,21 +6,21 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
-	<h1>Registration</h1>
+	<h1 th:text="#{signup.header}"></h1>
 	<br></br>
 	<form th:action="@{/signup/regUser}" th:object="${registerForm}" method="POST">
 		<div>
-			Please give an email and a password
+			<p th:text="#{signup.description}"></p>
 			<br></br>
 			<br></br>
 			<div>
-				<input type="text" th:placeholder="'Email address'" th:field="*{email}" required="true"/>
+				<input type="text" th:placeholder="#{signup.placeholder.email}" th:field="*{email}" required="true"/>
 				<br></br>
 				<br></br>
-				<input type="password" th:placeholder="Password" th:field="*{password}" required="true"/>
+				<input type="password" th:placeholder="#{signup.placeholder.password}" th:field="*{password}" required="true"/>
 				<br></br>
 				<br></br>
-				<input type="password" th:placeholder="'Type password again'" th:field="*{passwordConfirm}" required="true"/>
+				<input type="password" th:placeholder="#{signup.placeholder.password-again}" th:field="*{passwordConfirm}" required="true"/>
 				<div>
 					<p class="error" th:each="err : ${#fields.errors('*')}" th:text="${err}">Errors</p>
 				</div>
@@ -28,7 +28,7 @@
 			<br></br>
 			<br></br>
 		</div>
-		<button style="height: 50px; width: 100px" type="submit">Sign Up!</button>
+		<button th:text="#{button.signup}" style="height: 50px; width: 100px" type="submit"></button>
 		<a href="/">Main page</a>
 	</form>
 
