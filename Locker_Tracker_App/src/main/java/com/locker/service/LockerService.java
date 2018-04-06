@@ -35,18 +35,14 @@ public class LockerService {
         return lockerRepo.findAll();
     }
 
-    public void addOwner(String email, Integer lockerId) {
+    public void addOwner(String email, Integer lockerId) throws LockerException {
         User loggedInUser = userService.getLoggedInUserByName(email);
-        Locker oldLocker = lockerRepo.findOneByOwner(loggedInUser);
-        Locker newLocker = lockerRepo.findOneById(lockerId);
+        Locker newLocker = lockerRepo.findByIdAndOwner(lockerId, null);
 
-        if (oldLocker != null) {
-            if (oldLocker.getId().equals(newLocker.getId())) {
-                throw new IllegalArgumentException("Locker change for itself is useless!");
-            }
-
-            oldLocker.setOwner(null);
-            lockerRepo.save(oldLocker);
+        if (newLocker == null) {
+            log.error("User tried to add locker which not his/her, "
+                            + "already owned or not exists. lockerId=[{}]", lockerId);
+            throw new LockerException("Locker owner is not null or the locker not exists. Cannot add to user!");
         }
 
         newLocker.setOwner(loggedInUser);
@@ -56,17 +52,18 @@ public class LockerService {
     }
 
     public void removeLocker(Integer lockerId, String email) throws LockerException {
-        Locker oldLocker = lockerRepo.findOneById(lockerId);
+        User loggedInUser = userService.getLoggedInUserByName(email);
+        Locker newLocker = lockerRepo.findByIdAndOwner(lockerId, loggedInUser);
 
-        if (oldLocker == null) {
-            log.error("User tried to remove locker which is not his/her. lockerId=[{}]", lockerId);
+        if (newLocker == null) {
+            log.error("User tried to remove locker which not his/her or not exists. lockerId=[{}]", lockerId);
             throw new LockerException("User has no such locker to remove!");
         }
 
-        oldLocker.setOwner(null);
-        lockerRepo.save(oldLocker);
+        newLocker.setOwner(null);
+        lockerRepo.save(newLocker);
 
-        log.info("Remove logged in User's locker succesfully done.");
+        log.info("Remove logged in User's locker is succesfully done.");
     }
 
 }

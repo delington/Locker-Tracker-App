@@ -38,7 +38,7 @@ public class LockerController {
 
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public String addLockerOwner(Model model, Principal principal,
-        @RequestParam(value = "lockerId") Integer lockerId) {
+        @RequestParam(value = "lockerId") Integer lockerId) throws LockerException {
 
         log.info(String.format("/add url called. lockerId=[%s]", lockerId));
         lockerService.addOwner(principal.getName(), lockerId);

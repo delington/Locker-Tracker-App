@@ -21,7 +21,7 @@
 				<td class="idColumn" th:text="${locker.id}">Locker identifier</td>
 				<td th:text=" ${locker.owner != null} ? ${locker.owner.email} : 'Free'">Email</td>
 				<td class="editable" th:if="${locker.owner == null}">
-				    <form action="#" th:action="@{/edit}" method="POST">
+				    <form action="#" th:action="@{/add}" method="POST">
 						<button th:text="#{button.reserve}" style="height: 50px; width: 70px" type="submit" name="lockerId" th:value="${locker.id}"></button>
 					</form>
 				</td>

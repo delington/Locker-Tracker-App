@@ -11,8 +11,11 @@ import com.locker.model.User;
 @Repository
 public interface LockerRepository extends CrudRepository<Locker, Integer> {
     public List<Locker> findAll();
-    
+
     public Locker findOneByOwner(User user);
 
+    public Locker findByIdAndOwner(Integer id, User user);
+
     public Locker findOneById(Integer lockerId);
+
 }
