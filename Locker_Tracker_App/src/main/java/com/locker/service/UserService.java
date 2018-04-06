@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
@@ -42,6 +43,7 @@ public class UserService {
         return userRepo.findByEmail(email.toLowerCase());
     }
 
+    @Transactional
     public void signUpUser(UserRegisterForm userForm) throws LockerException, UnsupportedEncodingException {
         String userFormEmail = userForm.getEmail().toLowerCase();
         User user = userRepo.findByEmail(userFormEmail);
@@ -71,6 +73,7 @@ public class UserService {
                     userFormEmail));
     }
 
+    @Transactional
     public void activateUser(String code) throws LockerException {
         User user = userRepo.findByActivation(code);
 
@@ -81,7 +84,6 @@ public class UserService {
 
         user.setEnabled(true);
         user.setActivation("");
-        userRepo.save(user);
 
         log.info("User activated its account");
     }

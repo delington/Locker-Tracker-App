@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.locker.exception.LockerException;
 import com.locker.model.Locker;
@@ -35,6 +36,7 @@ public class LockerService {
         return lockerRepo.findAll();
     }
 
+    @Transactional
     public void addOwner(String email, Integer lockerId) throws LockerException {
         User loggedInUser = userService.getLoggedInUserByName(email);
         Locker newLocker = lockerRepo.findByIdAndOwner(lockerId, null);
@@ -51,6 +53,7 @@ public class LockerService {
         log.info("Change User's locker successfully done.");
     }
 
+    @Transactional
     public void removeLocker(Integer lockerId, String email) throws LockerException {
         User loggedInUser = userService.getLoggedInUserByName(email);
         Locker newLocker = lockerRepo.findByIdAndOwner(lockerId, loggedInUser);
@@ -61,7 +64,6 @@ public class LockerService {
         }
 
         newLocker.setOwner(null);
-        lockerRepo.save(newLocker);
 
         log.info("Remove logged in User's locker is succesfully done.");
     }
