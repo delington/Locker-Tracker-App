@@ -1,7 +1,6 @@
 package com.locker.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -17,13 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
 import com.locker.model.LoginNotification;
 import com.locker.service.EmailService;
-import com.locker.service.LockerService;
 import com.locker.service.UserService;
 import com.locker.validator.UserRegisterFormValidator;
 
@@ -36,8 +33,6 @@ public class PublicController {
 
     private UserRegisterFormValidator formValidator;
 
-    private LockerService lockerService;
-
     private UserService userService;
 
     private EmailService emailService;
@@ -45,11 +40,6 @@ public class PublicController {
     @Autowired
     public void setFormValidator(UserRegisterFormValidator formValidator) {
         this.formValidator = formValidator;
-    }
-
-    @Autowired
-    public void setLockerService(LockerService lockerService) {
-        this.lockerService = lockerService;
     }
 
     @Autowired
@@ -88,8 +78,8 @@ public class PublicController {
 
     @RequestMapping("/signup/regUser")
     public String signUpUser(Model model,
-            @Valid @ModelAttribute(USER_REGISTER_FORM_ID) UserRegisterForm userForm,
-            BindingResult bindingResult)
+        @Valid @ModelAttribute(USER_REGISTER_FORM_ID) UserRegisterForm userForm,
+        BindingResult bindingResult)
                     throws LockerException, UnsupportedEncodingException {
         log.info("/signup/regUser url called.");
 
@@ -108,16 +98,6 @@ public class PublicController {
         return "login";
     }
 
-    @RequestMapping("/lockers")
-    public String listLockers(Model model, Principal principal) {
-
-        log.info("/lockers url called.");
-        model.addAttribute("lockers", lockerService.getLockers());
-        model.addAttribute("userEmail", principal.getName());
-
-        return "lockers";
-    }
-
     @RequestMapping("/users")
     public String listUsers(Model model) {
 
@@ -127,29 +107,8 @@ public class PublicController {
         return "users";
     }
 
-    @RequestMapping(value = "/edit" , method = RequestMethod.POST)
-    public String editLockerOwner(Model model, Principal principal,
-            @RequestParam(value = "lockerId") Integer lockerId) {
-
-        log.info(String.format("/edit url called. lockerId=[%s]", lockerId));
-        lockerService.editOwner(principal.getName(), lockerId);
-        log.info("/edit end point's tasks excecuted successfully.");
-
-        return "redirect:lockers";
-    }
-
-    @RequestMapping(value = "/remove" , method = RequestMethod.DELETE)
-    public String removeLockerOwner(Model model, Principal principal) {
-
-        log.info(String.format("/remove url called."));
-        lockerService.removeLocker(principal.getName());
-        log.info("/remove end point's tasks excecuted successfully.");
-
-        return "redirect:lockers";
-    }
-
-     @RequestMapping(value = "/activation/{code}", method = RequestMethod.GET)
-        public String activation(Model model, @PathVariable("code") String code) {
+    @RequestMapping(value = "/activation/{code}", method = RequestMethod.GET)
+    public String activation(Model model, @PathVariable("code") String code) {
         log.info("/activation url called.");
 
         LoginNotification notification = new LoginNotification();
@@ -166,5 +125,5 @@ public class PublicController {
         model.addAttribute("notification", notification);
         return "login";
 
-     }
+    }
 }

@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -32,7 +31,6 @@ public class User {
         this.password = password;
     }
 
-    @OneToOne(mappedBy = "locker")
     public Integer getId() {
         return id;
     }
