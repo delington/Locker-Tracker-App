@@ -17,9 +17,11 @@ import org.springframework.util.Assert;
 
 import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
+import com.locker.model.Locker;
 import com.locker.model.Role;
 import com.locker.model.User;
 import com.locker.model.UserDetailsImpl;
+import com.locker.repository.LockerRepository;
 import com.locker.repository.RoleRepository;
 import com.locker.repository.UserRepository;
 
@@ -34,12 +36,16 @@ public class UserService implements UserDetailsService {
 
     private RoleRepository roleRepo;
 
+    private LockerRepository lockerRepo;
+
     private EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository userRepo, RoleRepository roleRepo, EmailService emailService) {
+    public UserService(UserRepository userRepo, RoleRepository roleRepo,
+                    LockerRepository lockerRepo, EmailService emailService) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
+        this.lockerRepo = lockerRepo;
         this.emailService = emailService;
     }
 
@@ -121,13 +127,24 @@ public class UserService implements UserDetailsService {
         log.info("User activated its account.");
     }
 
+    /**
+     * Delete user without deleting the corresponding Locker objects
+     * @param logged in User's email
+     */
+    @Transactional
     public void delete(String email) {
         User loggedInUser = userRepo.findByEmail(email);
-        Assert.notNull(loggedInUser, "Logged in user not found by his email!");
+        Assert.notNull(loggedInUser, "Logged in user not found by his/her email!");
 
-        loggedInUser.getLockers().remove(0);
-        loggedInUser.setRoles(null);
-        userRepo.save(loggedInUser);
+        List<Locker> userLockers = loggedInUser.getLockers();
+
+        if (userLockers != null) {
+            userLockers.forEach(locker -> {
+                locker.setOwner(null);
+            });
+            lockerRepo.save(userLockers);
+        }
+
         userRepo.delete(loggedInUser);
         log.info("User deleted its account.");
     }
