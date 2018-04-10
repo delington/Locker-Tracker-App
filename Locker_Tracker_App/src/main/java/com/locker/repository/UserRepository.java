@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.locker.model.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long>{
+public interface UserRepository extends CrudRepository<User, Long> {
     public List<User> findAll();
 
     public User findByEmail(String email);

@@ -2,13 +2,16 @@
 	xmlns:th="http://www.thymleaf.org">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
 	<h1 th:text="#{lockers.header}"></h1>
 	<a th:text="#{button.users}" href="/users"></a>
-	<form id="formLogout" th:action="@{/logout}" method="POST">
-        <a th:text="#{button.logout}" id="logoutAnchor" href="javascript:{}" onclick="submitLogout()"></a>
+	<form id="formDelete" th:action="@{/delete}" th:method="DELETE">
+        <button th:text="#{button.delete}" class="btn btn-danger"></button>
+    </form>
+    <form id="formLogout" th:action="@{/logout}" method="POST">
+        <button th:text="#{button.logout}" class="btn btn-primary"></button>
     </form>
 	<div>
 		<table>
@@ -34,10 +37,5 @@
 		</table>
 	</div>
 	
-	<script>
-		submitLogout = () => {
-			document.getElementById('formLogout').submit();
-		}
-	</script>
 </body>
 </html>

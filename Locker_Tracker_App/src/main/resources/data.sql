@@ -22,5 +22,11 @@ insert into Locker_user (user_id, locker_id) values ((select id FROM USER where 
 insert into Locker_user (user_id, locker_id) values ((select id FROM USER where email like '%laci%'), 1);
 insert into Locker_user (user_id, locker_id) values ((select id FROM USER where email like '%endre%'), 4);
 
+insert into role (role) values ('ADMIN');
+insert into role (role) values ('USER');
 
-
+insert into user_role (user_id, role_id) values ((select id FROM USER where email like '%gyula%'), 	(select id FROM role where role like '%USER%'));
+insert into user_role (user_id, role_id) values ((select id FROM USER where email like '%csilla%'), (select id FROM role where role like '%USER%'));
+insert into user_role (user_id, role_id) values ((select id FROM USER where email like '%alma%'), 	(select id FROM role where role like '%USER%'));
+insert into user_role (user_id, role_id) values ((select id FROM USER where email like '%endre%'),	(select id FROM role where role like '%USER%'));
+insert into user_role (user_id, role_id) values ((select id FROM USER where email like '%laci%'), 	(select id FROM role where role like '%USER%'));

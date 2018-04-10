@@ -11,14 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.locker.service.UserDetailServiceImpl;
+import com.locker.service.UserService;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserDetailServiceImpl userDetailsService;
+	private UserService userService;
 
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -29,7 +29,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider authenticationProvider() {
 	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(userService);
         authProvider.setPasswordEncoder(encoder());
 
         return authProvider;

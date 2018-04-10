@@ -1,6 +1,7 @@
 package com.locker.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -125,5 +126,16 @@ public class PublicController {
         model.addAttribute("notification", notification);
         return "login";
 
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(Model model, Principal principal) {
+        String loggedInUserEmail = principal.getName();
+        log.info("/delete url called. Logged in User email = [{}]", loggedInUserEmail);
+
+        userService.delete(loggedInUserEmail);
+
+        model.addAttribute("notification", new LoginNotification("login.user-deleted", "success"));
+        return "login";
     }
 }
