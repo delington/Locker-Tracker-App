@@ -1,36 +1,37 @@
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymleaf.org">
-      
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org">
+
+<head th:replace="login :: header"></head>
+
 <body>
-	<h1 th:text="#{signup.header}"></h1>
-	<br></br>
-	<form th:action="@{/signup/regUser}" th:object="${registerForm}" method="POST">
-		<div>
-			<p th:text="#{signup.description}"></p>
-			<br></br>
-			<br></br>
-			<div>
-				<input type="text" th:placeholder="#{signup.placeholder.email}" th:field="*{email}" required="true"/>
-				<br></br>
-				<br></br>
-				<input type="password" th:placeholder="#{signup.placeholder.password}" th:field="*{password}" required="true"/>
-				<br></br>
-				<br></br>
-				<input type="password" th:placeholder="#{signup.placeholder.password-again}" th:field="*{passwordConfirm}" required="true"/>
-				<div>
-					<p class="error" th:each="err : ${#fields.errors('*')}" th:text="${err}">Errors</p>
-				</div>
-			</div>
-			<br></br>
-			<br></br>
-		</div>
-		<button th:text="#{button.signup}" style="height: 50px; width: 100px" type="submit"></button>
-		<a href="/">Main page</a>
-	</form>
+  <div class="container">
+    <h1 th:text="#{signup.header}"></h1>
+    <br></br>
+    <form class="form-group" th:action="@{/signup/regUser}" th:object="${registerForm}" method="POST">
+      <div>
+        <p th:text="#{signup.description}"></p>
+        <br></br>
+        <br></br>
+        <div>
+            <input class="form-control" type="text" th:placeholder="#{signup.placeholder.email}" th:field="*{email}" required="true" />
+            <br></br>
+            <br></br>
+            <input class="form-control" type="password" th:placeholder="#{signup.placeholder.password}" th:field="*{password}" required="true" />
+            <br></br>
+            <br></br>
+            <input class="form-control" type="password" th:placeholder="#{signup.placeholder.password-again}" th:field="*{passwordConfirm}" required="true" />
+        </div>
+        <br></br>
+        <br></br>
+      </div>
+      <button class="btn btn-outline-success" th:text="#{button.signup}" style="height: 50px; width: 100px" type="submit"></button>
+      <a class="btn btn-outline-primary" href="/">Main page</a>
+      <div>
+        <br></br>
+        <p class="alert alert-danger" th:each="err : ${#fields.errors('*')}" th:text="${err}">Errors</p>
+      </div>
+    </form>
+  </div>
 
 </body>
+
 </html>

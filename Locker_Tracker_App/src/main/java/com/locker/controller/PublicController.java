@@ -92,7 +92,7 @@ public class PublicController {
         emailService.sendRegistrationSuccessfullMessage(userForm.getEmail());
 
         LoginNotification notification =
-                new LoginNotification("login.activation", "success");
+                new LoginNotification("login.activation", "alert alert-success");
 
         model.addAttribute("notification", notification);
         log.info(notification.toString());
@@ -117,10 +117,10 @@ public class PublicController {
         try {
             userService.activateUser(code);
             notification.setMessage("activation.success");
-            notification.setType("success");
+            notification.setType("alert alert-success");
         } catch (LockerException ex) {
             notification.setMessage("activation.user-not-found");
-            notification.setType("error");
+            notification.setType("alert alert-danger");
         }
 
         model.addAttribute("notification", notification);
@@ -135,7 +135,7 @@ public class PublicController {
 
         userService.delete(loggedInUserEmail);
 
-        model.addAttribute("notification", new LoginNotification("login.user-deleted", "success"));
+        model.addAttribute("notification", new LoginNotification("login.user-deleted", "alert alert-success"));
         return "login";
     }
 }

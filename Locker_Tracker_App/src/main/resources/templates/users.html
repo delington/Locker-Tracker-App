@@ -1,22 +1,28 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymleaf.org">
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org">
+
+<head th:replace="login :: header"></head>
+
 <body>
-	<h1 th:text="#{users.header}">Users</h1>
-	<a th:text="#{button.lockers}" href="/lockers"></a>
-    <br></br>
-    <br></br>
-	<table>
-		<tr>
-			<th th:text="#{table.header.user-id}"></th>
-			<th th:text="#{table.header.user-email}"></th>
-		</tr>
-		<tr th:each="user : ${users}">
-			<td class="idColumn" th:text="${user.id}">User identifier</td>
-			<td th:text="${user.email}">Email</td>
-		</tr>
-	</table>
+	<div class="container">
+		<h1 th:text="#{users.header}">Users</h1>
+		<a th:text="#{button.lockers}" href="/lockers" class="btn btn-outline-info"></a>
+		<br></br>
+		<br></br>
+		<table class="table">
+			<thead>
+				<tr>
+					<th th:text="#{table.header.user-id}"></th>
+					<th th:text="#{table.header.user-email}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td class="idColumn" th:text="${user.id}">User identifier</td>
+					<td th:text="${user.email}">Email</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 </body>
 </html>

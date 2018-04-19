@@ -1,39 +1,44 @@
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymleaf.org">
-      
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+<html th:fragment="htmlBasic" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymleaf.org">
+
+<head th:fragment="header">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-	<h1 th:text="#{login.header}"></h1>
-	<br></br>
-	<form th:action="@{/login}" method="POST">
-		<div>
-			<p th:text="#{login.description}"></p>
-			<br></br>
-			<br></br>
-			<div>
-				<div th:text="#{login.email.text}"></div> <input type="text" id="username" name="username" required="true"/>
-				<br></br>
-				<br></br>
-				<div th:text="#{login.password.text}"></div> <input type="password" id="password" name="password" required="true"/>
-			</div>
-			<br></br>
-			<br></br>
-		</div>
-		<button style="height: 50px; width: 100px" type="submit">Login</button>
-		<br></br>
-		<br></br>
-		<br></br>
-		<a th:text="#{button.signup}" href="/signup"></a>
-	</form>
-	<br></br>
-	<div>
-        <p th:if="${param.logout}" th:text="#{logout.success}" class="success"></p>
-    	<p th:if="${param.error}" th:text="#{login.error}" class="error"></p>
-   	    <p th:if="${notification != null}" th:text="#{${notification.message}}" th:class="${notification.type}"></p>
-	</div> 
+
+  <div class="container">
+    <h1 th:text="#{login.header}"></h1>
+    <br></br>
+    <form class="form-group" th:action="@{/login}" method="POST">
+      <div>
+        <p th:text="#{login.description}"></p>
+        <br></br>
+        <br></br>
+        <div>
+          <div th:text="#{login.email.text}"></div> <input class="form-control" type="text" id="username" name="username" required="true" />
+          <br></br>
+          <br></br>
+          <div th:text="#{login.password.text}"></div> <input class="form-control" type="password" id="password" name="password" required="true" />
+        </div>
+        <br></br>
+        <br></br>
+      </div>
+      <button id="loginButton" class="btn btn-primary" style="height: 50px; width: 100px" type="submit">Login</button>
+      <a class="btn btn-success" th:text="#{button.signup}" href="/signup"></a>
+    </form>
+    <br></br>
+    <div>
+      <p th:if="${param.logout}" th:text="#{logout.success}" class="alert alert-success"></p>
+      <p th:if="${param.error}" th:text="#{login.error}" class="alert alert-danger"></p>
+      <p th:if="${notification != null}" th:text="#{${notification.message}}" th:class="${notification.type}"></p>
+    </div>
+  </div>
 
 </body>
 </html>

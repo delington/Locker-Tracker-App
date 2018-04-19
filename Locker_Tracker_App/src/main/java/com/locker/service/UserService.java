@@ -50,6 +50,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(email.toLowerCase());
 
@@ -57,6 +58,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found by its email in the database!");
         }
 
+        user.getRoles().size();
         return new UserDetailsImpl(user);
     }
 
