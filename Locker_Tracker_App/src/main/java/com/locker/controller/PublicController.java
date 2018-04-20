@@ -3,11 +3,14 @@ package com.locker.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -129,11 +132,12 @@ public class PublicController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public String delete(Model model, Principal principal) {
+    public String delete(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
         String loggedInUserEmail = principal.getName();
         log.info("/delete url called. Logged in User email = [{}]", loggedInUserEmail);
 
         userService.delete(loggedInUserEmail);
+        SecurityContextHolder.clearContext();
 
         model.addAttribute("notification", new LoginNotification("login.user-deleted", "alert alert-success"));
         return "login";

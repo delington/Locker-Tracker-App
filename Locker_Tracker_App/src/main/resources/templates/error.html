@@ -4,12 +4,11 @@
 
 <body>
 	<div class="container">
+		<h2 th:text="#{page.exception.header}"></h2>
 		<section>
-			<h2 th:text="#{page.exception.header}"></h2>
-			<p th:text="${exception}"></p>
+			<div id="exceptionText" class="alert alert-danger" th:text="${exception}"></div>
 		</section>
-		<br></br>
-		<a th:text="#{button.main-page}" href="/"></a>
+		<a class="btn btn-primary" th:text="#{button.main-page}" href="/"></a>
 	</div>
 </body>
 </html>

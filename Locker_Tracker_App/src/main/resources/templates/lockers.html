@@ -5,12 +5,33 @@
 <body>
 	<div class="container">
 		<h1 th:text="#{lockers.header}"></h1>
-		<div class="row">
+		<div id="lockerHeaderButtonsRow" class="row">
 			<div class="col"><a class="btn btn-success" th:text="#{button.users}" href="/users"></a></div>
 			<div class="col">
-				<form id="formDelete" th:action="@{/delete}" th:method="DELETE">
-					<button th:text="#{button.delete}" class="btn btn-danger"></button>
-				</form>
+				<button th:text="#{button.delete-account}" type="button" class="btn btn-warning" data-toggle="modal" data-target="#alertModal"></button>
+				<div class="modal fade" id="alertModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title" th:text="#{alert.alert-text}"></h4>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body" th:text="#{alert.account-delete}"></div>
+
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<form id="formDelete" th:action="@{/delete}" th:method="DELETE">
+									<button th:text="#{button.delete-account}" class="btn btn-outline-warning"></button>
+									<button th:text="#{button.cancel}" type="button" class="btn btn-primary" data-dismiss="modal"></button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 			<div class="col">
 				<form id="formLogout" th:action="@{/logout}" method="POST">
@@ -19,7 +40,7 @@
 			</div>
 		</div>
 		<div>
-			<table class="table">
+			<table class="table table-striped">
 				<thead>
 					<th th:text="#{table.header.locker-id}"></th>
 					<th th:text="#{table.header.owner-email}"></th>
@@ -29,15 +50,17 @@
 					<tr th:each="locker : ${lockers}">
 						<td class="idColumn" th:text="${locker.id}">Locker identifier</td>
 						<td th:text=" ${locker.owner != null} ? ${locker.owner.email} : 'Free'">Email</td>
-						<td class="table-success" th:if="${locker.owner == null}">
+						<td th:if="${locker.owner == null}">
 							<form action="#" th:action="@{/add}" method="POST">
-								<button th:text="#{button.reserve}" style="height: 50px; width: 70px" type="submit" name="lockerId" th:value="${locker.id}"></button>
+								<button class="btn btn-success" th:text="#{button.reserve}" type="submit" name="lockerId" th:value="${locker.id}"></button>
 							</form>
 						</td>
-						<td th:class="${locker.owner != null and userEmail == locker.owner.email} ? 'table-danger' : ''" th:if="${locker.owner != null}">
+						<td th:if="${locker.owner != null and userEmail == locker.owner.email}">
 							<form th:if="${userEmail == locker.owner.email}" th:action="@{/remove}" th:method="DELETE">
-								<button th:text="#{button.remove}" name="lockerId" th:value="${locker.id}" style="height: 50px; width: 70px" type="submit"></button>
+								<button class="btn btn-danger" th:text="#{button.remove}" name="lockerId" th:value="${locker.id}" type="submit"></button>
 							</form>
+						</td>
+						<td th:if="${locker.owner != null and userEmail != locker.owner.email}">
 						</td>
 					</tr>
 				</tbody>
