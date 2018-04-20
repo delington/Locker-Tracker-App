@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -134,6 +135,7 @@ public class PublicController {
         log.info("/delete url called. Logged in User email = [{}]", loggedInUserEmail);
 
         userService.delete(loggedInUserEmail);
+        SecurityContextHolder.clearContext();
 
         model.addAttribute("notification", new LoginNotification("login.user-deleted", "alert alert-success"));
         return "login";
