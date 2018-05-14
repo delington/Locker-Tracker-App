@@ -3,6 +3,8 @@ package com.locker.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -130,7 +132,7 @@ public class PublicController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public String delete(Model model, Principal principal) {
+    public String delete(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
         String loggedInUserEmail = principal.getName();
         log.info("/delete url called. Logged in User email = [{}]", loggedInUserEmail);
 
