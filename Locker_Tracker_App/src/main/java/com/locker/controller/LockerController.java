@@ -38,7 +38,7 @@ public class LockerController {
 
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public String addLockerOwner(Model model, Principal principal,
-        @RequestParam(value = "lockerId") Integer lockerId) throws LockerException {
+        @RequestParam(value = "lockerId") String lockerId) throws LockerException {
 
         log.info(String.format("/add url called. lockerId=[%s]", lockerId));
         lockerService.addOwner(principal.getName(), lockerId);
@@ -49,7 +49,7 @@ public class LockerController {
 
     @RequestMapping(value = "/remove" , method = RequestMethod.DELETE)
     public String removeLockerOwner(Model model, Principal principal,
-        @RequestParam(value = "lockerId") Integer lockerId) throws LockerException {
+        @RequestParam(value = "lockerId") String lockerId) throws LockerException {
 
         log.info("/remove url called with lockerId=[{}]", lockerId);
         lockerService.removeLocker(lockerId, principal.getName());

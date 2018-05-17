@@ -37,9 +37,9 @@ public class LockerService {
     }
 
     @Transactional
-    public void addOwner(String email, Integer lockerId) throws LockerException {
+    public void addOwner(String email, String lockerId) throws LockerException {
         User loggedInUser = userService.getLoggedInUserByName(email);
-        Locker newLocker = lockerRepo.findByIdAndOwner(lockerId, null);
+        Locker newLocker = lockerRepo.findByIdAndOwnerId(lockerId, null);
 
         if (newLocker == null) {
             log.error("User tried to add locker which not his/her, "
@@ -47,23 +47,23 @@ public class LockerService {
             throw new LockerException("Locker owner is not null or the locker not exists. Cannot add to user!");
         }
 
-        newLocker.setOwner(loggedInUser);
+        newLocker.setOwnerId(loggedInUser.getId());
         lockerRepo.save(newLocker);
 
         log.info("Change User's locker successfully done.");
     }
 
     @Transactional
-    public void removeLocker(Integer lockerId, String email) throws LockerException {
+    public void removeLocker(String lockerId, String email) throws LockerException {
         User loggedInUser = userService.getLoggedInUserByName(email);
-        Locker newLocker = lockerRepo.findByIdAndOwner(lockerId, loggedInUser);
+        Locker newLocker = lockerRepo.findByIdAndOwnerId(lockerId, loggedInUser);
 
         if (newLocker == null) {
             log.error("User tried to remove locker which not his/her or not exists. lockerId=[{}]", lockerId);
             throw new LockerException("User has no such locker to remove!");
         }
 
-        newLocker.setOwner(null);
+        newLocker.setOwnerId(null);
 
         log.info("Remove logged in User's locker is succesfully done.");
     }

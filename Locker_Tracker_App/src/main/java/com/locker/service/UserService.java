@@ -18,11 +18,9 @@ import org.springframework.util.Assert;
 import com.locker.exception.LockerException;
 import com.locker.form.UserRegisterForm;
 import com.locker.model.Locker;
-import com.locker.model.Role;
 import com.locker.model.User;
 import com.locker.model.UserDetailsImpl;
 import com.locker.repository.LockerRepository;
-import com.locker.repository.RoleRepository;
 import com.locker.repository.UserRepository;
 
 @Service
@@ -34,17 +32,13 @@ public class UserService implements UserDetailsService {
 
     private UserRepository userRepo;
 
-    private RoleRepository roleRepo;
-
     private LockerRepository lockerRepo;
 
     private EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository userRepo, RoleRepository roleRepo,
-                    LockerRepository lockerRepo, EmailService emailService) {
+    public UserService(UserRepository userRepo, LockerRepository lockerRepo, EmailService emailService) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
         this.lockerRepo = lockerRepo;
         this.emailService = emailService;
     }
@@ -58,7 +52,6 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found by its email in the database!");
         }
 
-        user.getRoles().size();
         return new UserDetailsImpl(user);
     }
 
@@ -82,8 +75,7 @@ public class UserService implements UserDetailsService {
         }
 
         user = new User();
-        checkRoleExistsAndSetToUser(user);
-
+        user.getRoles().add(USER_ROLE);
         user.setEmail(userFormEmail);
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -102,18 +94,6 @@ public class UserService implements UserDetailsService {
                     userFormEmail));
     }
 
-    private void checkRoleExistsAndSetToUser(User user) {
-
-        Role userRole = roleRepo.findByRole(USER_ROLE);
-        if (userRole != null) {
-            user.getRoles().add(userRole);
-        } else {
-            Role newRole = new Role(USER_ROLE);
-            roleRepo.save(newRole);
-            user.addRole(newRole);
-        }
-    }
-
     @Transactional
     public void activateUser(String code) throws LockerException {
         User user = userRepo.findByActivation(code);
@@ -125,6 +105,8 @@ public class UserService implements UserDetailsService {
 
         user.setEnabled(true);
         user.setActivation("");
+
+        userRepo.save(user);
 
         log.info("User activated its account.");
     }
@@ -138,11 +120,11 @@ public class UserService implements UserDetailsService {
         User loggedInUser = userRepo.findByEmail(email);
         Assert.notNull(loggedInUser, "Logged in user not found by his/her email!");
 
-        List<Locker> userLockers = loggedInUser.getLockers();
+        List<Locker> userLockers = lockerRepo.findByOwnerId(loggedInUser.getId());
 
         if (userLockers != null) {
             userLockers.forEach(locker -> {
-                locker.setOwner(null);
+                locker.setOwnerId(null);
             });
             lockerRepo.save(userLockers);
         }

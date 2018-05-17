@@ -49,18 +49,18 @@
 				<tbody>
 					<tr th:each="locker : ${lockers}">
 						<td class="idColumn" th:text="${locker.id}">Locker identifier</td>
-						<td th:text=" ${locker.owner != null} ? ${locker.owner.email} : 'Free'">Email</td>
-						<td th:if="${locker.owner == null}">
+						<td th:text=" ${locker.ownerId != null} ? 'Taken' : 'Free'">Email</td>
+						<td th:if="${locker.ownerId == null}">
 							<form action="#" th:action="@{/add}" method="POST">
 								<button class="btn btn-success" th:text="#{button.reserve}" type="submit" name="lockerId" th:value="${locker.id}"></button>
 							</form>
 						</td>
-						<td th:if="${locker.owner != null and userEmail == locker.owner.email}">
-							<form th:if="${userEmail == locker.owner.email}" th:action="@{/remove}" th:method="DELETE">
+						<td th:if="${locker.ownerId != null and userEmail == locker.ownerId.email}">
+							<form th:if="${userEmail == locker.ownerId.email}" th:action="@{/remove}" th:method="DELETE">
 								<button class="btn btn-danger" th:text="#{button.remove}" name="lockerId" th:value="${locker.id}" type="submit"></button>
 							</form>
 						</td>
-						<td th:if="${locker.owner != null and userEmail != locker.owner.email}">
+						<td th:if="${locker.ownerId != null and userEmail != locker.ownerId.email}">
 						</td>
 					</tr>
 				</tbody>

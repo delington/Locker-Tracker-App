@@ -1,48 +1,39 @@
 package com.locker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 public class Locker {
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    private String id;
 
-    @ManyToOne
-    @JoinTable(name = "LOCKER_USER",
-               joinColumns = {@JoinColumn(name = "LOCKER_ID")},
-               inverseJoinColumns = {@JoinColumn(name = "USER_ID")})
-    private User owner;
+    private String ownerId;
 
     public Locker() {
 
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override
     public String toString() {
-        return "Locker [id=" + id + ", owner=" + owner + "]";
+        return "Locker [id=" + id + ", ownerId=" + ownerId + "]";
     }
 
 }

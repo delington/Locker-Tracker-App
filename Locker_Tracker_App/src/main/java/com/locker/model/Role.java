@@ -1,15 +1,11 @@
 package com.locker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
-@Entity
 public class Role {
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    private String id;
 
     private String role;
 
@@ -21,11 +17,11 @@ public class Role {
         this.role = role;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
